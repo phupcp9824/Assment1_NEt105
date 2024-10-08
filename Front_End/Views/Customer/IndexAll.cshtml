@@ -1,0 +1,61 @@
+﻿@model Data.Models.ComboAndFoodViewModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+<main>
+    <div class="container-fluid mt-4">
+@*         <h2>Search Results for: @(Request.Query["Name"].ToString())</h2> *@
+        <div class="row">
+                @if (Model.Combos != null && Model.Combos.Any())
+                {
+                    foreach (var combo in Model.Combos)
+                    {
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="@combo.Picture" alt="@combo.Name" width="60px" height="250px" class="combo-image card-img-top" />
+                            <div class="card-body">
+                                <h5 class="card-title">@combo.Name</h5>
+                                <p class="card-text" style="color:coral">
+                                    @combo.Price VND
+                                    <a href="#" class="btn btn-primary float-right">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+                else
+                {
+                    <p>No combos available at the moment.</p>
+                }
+                @if (Model.Foods != null && Model.Foods.Any()) // check list at least a element
+                {
+                    foreach (var food in Model.Foods)
+                    {
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="@food.Picture" alt="@food.Name" width="60px" height="250px" class="combo-image card-img-top" />
+                            <div class="card-body">
+                                <h5 class="card-title">@food.Name</h5>
+                                <p class="card-text" style="color:coral">
+                                    @food.Price VND
+                                    <a href="#" class="btn btn-primary float-right">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+                else
+                {
+                    <p>No foods available at the moment.</p>
+                }
+        </div>
+    </div>
+
+</main>
+

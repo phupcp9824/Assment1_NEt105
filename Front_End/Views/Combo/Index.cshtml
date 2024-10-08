@@ -1,0 +1,40 @@
+﻿@model List<WebApi.Models.Combo>
+
+<div class="">
+    <h1>List Combo</h1>
+    <a class="btn btn-outline-success" href="/Combo/Create"><i class="bi bi-plus-circle"></i>Combo</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Combo in Model)
+            {
+                <tr>
+                    <td>@Combo.Id</td>  
+                    <td>@Combo.Name</td>
+                    <td>@Combo.Price</td>s
+                    <td>@Combo.Quantity</td>
+                    <td>
+                        <img src="@Combo.Picture" alt="@Combo.Name" width="80" height="100" class="combo-image" />
+                    </td>
+                    <td>@Combo.Description</td>
+                    <td>
+                        <a class="btn btn-outline-success" href="/Combo/Edit/@Combo.Id"><i class="bi bi-pencil-fill"></i>Edit</a>
+                        <form class="d-inline" action="/Combo/Delete/@Combo.Id" method="post">
+                            <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3"></i>Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }   
+        </tbody>
+    </table>
+</div>

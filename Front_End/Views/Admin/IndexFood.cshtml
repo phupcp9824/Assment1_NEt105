@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WebApi.Models.FastFoodItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>List Food</h3>
+<p>
+    <a class="btn btn-outline-primary" href="/Food/Create"><i class="bi bi-plus-circle"></i>Food</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <img src="@item.Picture" alt="@item.Name" width="80" height="100" class="combo-image" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @item.Category.Name
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" href="/Food/Edit/@item.Id"><i class="bi bi-pencil-fill"></i>Edit</a>
+                    <form class="d-inline" action="/Food/Delete/@item.Id" method="post">
+                        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3"></i>Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
