@@ -1,26 +1,26 @@
 ﻿using Data.Repository.IRepository;
-using Data.Repository.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ComboController : ControllerBase
     {
         private readonly IRepCombo _repCombo;
-        private ILogger<ComboController> _logger; // Error check
+        private readonly ILogger<ComboController> _logger;
         private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _environment;
 
-        public ComboController(IRepCombo repCombo, ILogger<ComboController> logger, IConfiguration configuration, IWebHostEnvironment environment)
+        public ComboController(IRepCombo repCombo, ILogger<ComboController> logger, IConfiguration configuration)
         {
             _repCombo = repCombo;
             _logger = logger;
             _configuration = configuration;
-            _environment = environment;
         }
 
         [HttpGet]
@@ -31,57 +31,59 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Combo comboImage)
+        public async Task<IActionResult> Create([FromBody] Combo comboImage)
         {
-            var add = _repCombo.CreateCombo(comboImage);
-            return Ok(add); 
+            if (comboImage == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+            var add = await _repCombo.CreateCombo(comboImage);
+            return Ok(add);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit(Combo combo)
+        public async Task<IActionResult> Edit([FromBody] Combo combo)
         {
+            if (combo == null)
+            {
+                return BadRequest("Invalid data.");
+            }
             await _repCombo.UpdateCombo(combo);
             return Ok(combo);
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var ComboId = await _repCombo.GetById(id); // await the async call
-            if (ComboId == null)
+            var comboId = await _repCombo.GetById(id);
+            if (comboId == null)
             {
-                _logger.LogWarning($"Student with ID {id} not found.");
-                return NotFound($"Student with ID {id} not found.");
+                _logger.LogWarning($"Không tìm thấy combo có ID {id}.");
+                return NotFound($"Không tìm thấy combo có ID {id}.");
             }
-            return Ok(ComboId);
+            return Ok(comboId);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var ComboId = await _repCombo.DeleteCombo(id); 
-            return Ok(ComboId);
+            var comboId = await _repCombo.DeleteCombo(id);
+            return Ok(comboId);
         }
 
-        [HttpGet("GetByName")]
-        public async Task<IActionResult> GetByName( string name)
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return BadRequest("Name cannot be empty");
+                return BadRequest("Tên không được để trống");
             }
-
             var combo = await _repCombo.GetByName(name);
-
             if (combo == null)
             {
-                return NotFound($"Combo with name '{name}' not found");
+                return NotFound($"Không tìm thấy combo có tên '{name}'");
             }
-
             return Ok(combo);
-
         }
     }
 }
-

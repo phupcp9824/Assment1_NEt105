@@ -19,7 +19,7 @@ namespace Front_End.Controllers
         public async Task<IActionResult> Index()
         {
             List<FastFoodItem> fastFoodItems = new List<FastFoodItem>();
-            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food");
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food/GetAll");
             if(response.IsSuccessStatusCode)
             {
                 string data = await response.Content.ReadAsStringAsync();
@@ -48,7 +48,7 @@ namespace Front_End.Controllers
                 }
                 fastFoodItem.Picture = "/images/" + unique;
             }
-            HttpResponseMessage response = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress + "/Food", fastFoodItem);
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress + "/Food/Create", fastFoodItem);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("IndexFood","Admin");
@@ -60,7 +60,7 @@ namespace Front_End.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             FastFoodItem fastFoodItem = new FastFoodItem();
-            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food/" + id);
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/Food/GetbyId/{id}");
             if (response.IsSuccessStatusCode)
             {
                 var apirespon = await response.Content.ReadAsStringAsync();
@@ -85,7 +85,7 @@ namespace Front_End.Controllers
             }
             else
             {
-                var existingCombo = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food/" + fastFoodItem.Id);
+                var existingCombo = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/Food/GetbyId/{fastFoodItem.Id}");
                 if (existingCombo.IsSuccessStatusCode)
                 {
                     var existingComboContent = await existingCombo.Content.ReadAsStringAsync();
@@ -93,7 +93,7 @@ namespace Front_End.Controllers
                     fastFoodItem.Picture = existingComboObj.Picture;
                 }
             }
-            HttpResponseMessage response = await _httpClient.PutAsJsonAsync(_httpClient.BaseAddress + "/Food", fastFoodItem);
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync(_httpClient.BaseAddress + "/Food/Edit", fastFoodItem);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("IndexFood", "Admin");
@@ -108,12 +108,25 @@ namespace Front_End.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            HttpResponseMessage response = await _httpClient.DeleteAsync(_httpClient.BaseAddress + "/Food/" + id);
+            HttpResponseMessage response = await _httpClient.DeleteAsync(_httpClient.BaseAddress + "/Food/Delete/" + id);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("IndexFood", "Admin");
             }
             return RedirectToAction("IndexFood", "Admin");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FindName(string name)
+        {
+            List<FastFoodItem> fastFoodItems = new List<FastFoodItem>();
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/Food/GetByName/{name}");
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                fastFoodItems = JsonConvert.DeserializeObject<List<FastFoodItem>>(data);
+            }
+            return View("Index", fastFoodItems);
         }
 
     }

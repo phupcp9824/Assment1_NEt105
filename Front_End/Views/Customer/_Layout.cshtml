@@ -26,15 +26,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav " style=" margin-left: 350px;">
+                <ul class="navbar-nav " style=" margin-left: 280px;">
                     <li class="nav-item active">
-                        <a class="nav-link text-black" asp-area="" asp-controller="Customer" asp-action="IndexAll">All</a>
+                        <a class="nav-link text-black" asp-area="" asp-controller="" asp-action="">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-black" asp-area="" asp-controller="Customer" asp-action="InterfaceFood">Fast Food</a>
+                        <a class="nav-link text-black" asp-area="" asp-controller="" asp-action="">Giới thiệu</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" asp-area="" asp-controller="Customer" asp-action="InterfaceCombo">Combo</a>
+                    <li class="nav-item">   
+                        <a class="nav-link text-black" asp-area="" asp-controller="" asp-action="">Liên hệ</a>
                     </li>
                 </ul>
                 <form class="form-inline ml-auto" style="margin-right: 180px;" method="get" action="/Customer/Find">
@@ -50,7 +50,10 @@
                             <i class="bi bi-person-circle" style="font-size:1.6rem"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/Account/Logout">Signin</a></li>
+                            <li><a class="dropdown-item" href="/User/LoginFirm">SignIn</a></li>
+                            <li><a class="dropdown-item" href="/User/SignUp">SignUp</a></li>
+                            <hr></hr>
+                            <li><a class="dropdown-item" href="/Account/Logout">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -60,7 +63,29 @@
     <div class="container-fluid">
        <div class="row">
             <aside class="col-md-3 mb-4">
-                <p>Part Aside</p>
+                <div class="card mt-4">
+                    <div class="card-header" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                        <h6 class="bi bi-list-task">List product</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item "><a asp-controller="Customer" asp-action="IndexAll">All</a></li>
+                        <li class="list-group-item "><a asp-controller="Customer" asp-action="InterfaceCombo">Combo</a></li>
+                        <li class="list-group-item "><a asp-controller="Customer" asp-action="InterfaceFood">Fast food</a></li>
+                        <li class="list-group-item "><a>Đồ uống</a></li>
+                    </ul>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-header" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                        <h6><i class="bi bi-star"></i> HÀNG ĐẶC BIỆT</h6>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">Hàng bán chạy</li>
+                        <li class="list-group-item">Hàng mới</li>
+                        <li class="list-group-item">Hàng giảm giá</li>
+                        <li class="list-group-item">Hàng đặc biệt</li>
+                        <li class="list-group-item">Hàng xem nhiều</li>
+                    </ul>
+                </div>
             </aside>
             <article class="col-md-9">
                 <main role="main" class="pb-3">

@@ -1,0 +1,19 @@
+﻿@model WebApi.Models.Combo
+
+<main class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mt-3">
+                <img src="@Model.Picture" alt="@Model.Name" width="250px" height="600px" class="img-fluid" />
+            </div>
+            <div class="col-md-9">
+                <h2 style="color:darkviolet">@Model.Name</h2>
+                <p><strong>Price:</strong> @Model.Price VND</p>
+                <p><strong>Quantity:</strong> @Model.Quantity</p>
+                <p><strong>Size:</strong> @Model.size</p>
+                <p><strong>Description:</strong> @Model.Description</p>
+                <a asp-controller="Admin" asp-action="IndexCombo" class="btn btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</main>

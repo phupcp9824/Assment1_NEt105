@@ -5,7 +5,19 @@
 }
 
 <h1>Index</h1>
-
+<div class="row">
+    <div class="col-10">
+        <form asp-action="FindName" method="get" class="form-inline my-2 my-lg-0 d-flex">
+            <input class="form-control mr-sm-2" type="search" name="name" placeholder="Search by name..." aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="col-2">
+        <form asp-action="Index" method="get" class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Show All</button>
+        </form>
+    </div>
+</div>
 <p>
     <a href="/Food/Create">Create New</a>
 </p>

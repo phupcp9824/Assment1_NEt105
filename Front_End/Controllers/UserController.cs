@@ -18,15 +18,17 @@ namespace Front_End.Controllers
             _httpClient = httpClient;
             _httpClient.BaseAddress = BaseAddress;
         }
+
         [HttpGet]
         public async Task<IActionResult> Customerface()
         {
             return View();
         }
+
         public async Task<IActionResult> Index()
         {
             List<User> users = new List<User>();
-            HttpResponseMessage response = await _httpClient.GetAsync("User");
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/User/GetAll");
 
             if (response.IsSuccessStatusCode)
             {
@@ -112,11 +114,11 @@ namespace Front_End.Controllers
                 string data = JsonConvert.SerializeObject(user);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
                 // Send to API  
-                HttpResponseMessage response = await _httpClient.PostAsync("User", content);
+                HttpResponseMessage response = await _httpClient.PostAsync(_httpClient.BaseAddress + "/User/Create", content);
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["Success"] = "Register Success";
-                    return RedirectToAction("LoginFirm","Admin");
+                    return RedirectToAction("LoginFirm","User");
                 }
                 else
                 {
@@ -128,17 +130,17 @@ namespace Front_End.Controllers
             {
                 ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
             }
-            return View(user);
+            return RedirectToAction("LoginFirm", "User");
         }
 
-      
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             User User = new User();
             // Send GET request to the API to get user by id
-            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/User/" + id);
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/User/GetById/{id}");
             if (response.IsSuccessStatusCode)
             {
                 // đọc content  từ api
@@ -151,7 +153,7 @@ namespace Front_End.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(User user)
         {
-            HttpResponseMessage response = await _httpClient.PutAsJsonAsync(_httpClient.BaseAddress + "/User", user);
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync(_httpClient.BaseAddress + "/User/Edit", user);
             if (response.IsSuccessStatusCode)
             {
                 TempData["SuccessMessage"] = "Edit Success";
@@ -166,7 +168,7 @@ namespace Front_End.Controllers
             try
             {
                 // get request delete to APi
-                HttpResponseMessage response = await _httpClient.DeleteAsync(_httpClient.BaseAddress + "/User/" + id);
+                HttpResponseMessage response = await _httpClient.DeleteAsync(_httpClient.BaseAddress + $"/User/Delete/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["SuccessMessage"] = "User deleted successfully";
@@ -175,7 +177,7 @@ namespace Front_End.Controllers
                 else
                 {
                     TempData["ErrorMessage"] = "Failed to delete user.";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index");   
                 }
             }
             catch (Exception ex)

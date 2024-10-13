@@ -12,5 +12,7 @@ namespace Data.Repository.IRepository
         Task<bool> DeleteUser (int id);
         Task<Role?> GetRoleById(int id);
         Task<User> Login(LoginModels login);
+
+        Task<List<User>> FindByUser(string Fullname, string phone, string email);
     }
 }

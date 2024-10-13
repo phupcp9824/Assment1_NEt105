@@ -9,6 +9,8 @@ namespace Data.Repository.IRepository
         Task<Combo> UpdateCombo(Combo combo);
         Task<Combo> GetById(int id);
         Task<Combo> DeleteCombo(int id);
-        Task<Combo> GetByName(string name);
+        Task<List<Combo>> GetByName(string name);
+
+
     }
 }

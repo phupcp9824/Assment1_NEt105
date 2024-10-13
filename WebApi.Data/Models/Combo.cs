@@ -13,6 +13,7 @@ namespace WebApi.Models
 
         [Range(1, 100)] 
         public int Quantity { get; set; }
+        public string? size { get; set; }
         public string? Picture { get; set; } // lưu trữ đường dẫn hình ảnh trong csdl
 
         public string? Description { get; set; }

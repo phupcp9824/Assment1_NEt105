@@ -102,6 +102,12 @@
                                 <p>Manager Combo</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a asp-controller="" asp-action="" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Order Management</p>
+                            </a>
+                        </li>
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
@@ -112,6 +118,8 @@
                 <main role="main" class="pb-3">
                     @RenderBody()
                 </main>
+                <!-- Add this line to render the 'Scripts' section -->
+                @RenderSection("Scripts", required: false)
             </div>
         </main> <!--end::App Main--> <!--begin::Footer-->
         <footer class="app-footer">

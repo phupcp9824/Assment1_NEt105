@@ -7,6 +7,7 @@
         public int? IdOrder { get; set; }
         public int? IdFood { get; set; }
         public int? IdCombo { get; set; }
+        public string? Usename { get; set; }
         public int Quantity { get; set; }
         public double TotalPrice { get; set; }
         public virtual Order? Order { get; set; }

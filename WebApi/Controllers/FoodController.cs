@@ -6,7 +6,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class FoodController : ControllerBase
     {
@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> GetbyId(int id)
         {
             var ComboId = await _repFood.GetById(id); // await the async call
             if (ComboId == null)
@@ -49,6 +49,17 @@ namespace WebApi.Controllers
             return Ok(ComboId);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdCate(int id)
+        {
+            var ComboId = await _repFood.GetByIdCate(id); // await the async call
+            if (ComboId == null)
+            {
+                _logger.LogWarning($"Student with ID {id} not found.");
+                return NotFound($"Student with ID {id} not found.");
+            }
+            return Ok(ComboId);
+        }
 
         [HttpPut]
         public async Task<IActionResult> Edit( FastFoodItem fastFoodItem)
@@ -69,7 +80,7 @@ namespace WebApi.Controllers
             return Ok(FoodId);
         }
 
-        [HttpGet("GetByName")]
+        [HttpGet("{name}")]
         public async Task<IActionResult> GetByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

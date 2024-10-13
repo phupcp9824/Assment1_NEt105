@@ -46,10 +46,14 @@ namespace Data.Repository.Repository
         }
 
 
-        public async Task<Combo> GetByName(string name)
+        public async Task<List<Combo>> GetByName(string name)
         {
-            var comboByName = await _db.Combos.FirstOrDefaultAsync(x => x.Name.ToLower().Trim() == name.ToLower().Trim());
+            var comboByName = await _db.Combos.
+                                              Where(x => x.Name.ToLower().Contains(name.ToLower()))
+                                              .ToListAsync();
             return comboByName;
         }
+
+
     }
 }

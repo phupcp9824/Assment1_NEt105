@@ -45,10 +45,17 @@ namespace Data.Repository.Repository
                 return fastFoodItem;
         }
 
-        public async Task<FastFoodItem> GetByName(string name)
+        public async Task<List<FastFoodItem>> GetByName(string name)
         {
-            var FoodByName = await _db.FastFoodItems.FirstOrDefaultAsync(x => x.Name.ToLower().Trim() == name.ToLower().Trim());
+            var FoodByName = await _db.FastFoodItems.Include(x => x.Category)
+                                                    .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+                                                    .ToListAsync();
             return FoodByName;
+        }
+
+        public async Task<FastFoodItem> GetByIdCate(int id)
+        {
+            return await _db.FastFoodItems.Include(x => x.Category).FirstAsync(x => x.Id == id);
         }
     }
 }

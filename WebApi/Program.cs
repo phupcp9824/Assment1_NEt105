@@ -63,6 +63,14 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 //        ReferenceHandler = ReferenceHandler.Preserve,
 //    }));
 //});
+// khai báo dịch vụ cho session
+builder.Services.AddSession(option =>
+{
+    // khai báo khoảng thời gian để sesion timout
+    option.IdleTimeout = TimeSpan.FromSeconds(60);
+    // nếu ko thực hiện tiếp yêu cầu nào session bị hết hạn 60s
+    // nếu thực hiện tiếp bộ đếm của session sẽ bị reset 
+});
 
 
 var app = builder.Build();
@@ -75,6 +83,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseSession();
 
 app.UseRouting();
 app.UseAuthentication();

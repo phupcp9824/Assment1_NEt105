@@ -9,7 +9,8 @@ namespace Data.Repository.IRepository
         Task<FastFoodItem> UpdateFood(FastFoodItem fastFoodItem);
         Task<FastFoodItem> GetById(int id);
         Task<FastFoodItem> DeleteFood(int id);
-        Task<FastFoodItem> GetByName(string name);
+        Task<List<FastFoodItem>> GetByName(string name);
+        Task<FastFoodItem> GetByIdCate(int id);
 
     }
 }

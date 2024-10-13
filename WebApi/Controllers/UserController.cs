@@ -10,7 +10,7 @@ using WebApi.Response;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("Login")]
+        [HttpPost("{Login}")]
         public async Task<IActionResult> Login(LoginModels Login)
         {
             var user = await _IRepUser.Login(Login);
@@ -140,6 +140,13 @@ namespace WebApi.Controllers
                   Role = role
               }
            );
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FindByUserRepository(string fullname, string phone, string email)
+        {
+            var find = await _IRepUser.FindByUser(fullname, phone, email);
+            return Ok(find);
         }
     }
 }

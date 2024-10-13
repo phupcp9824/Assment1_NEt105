@@ -36,7 +36,7 @@ namespace Front_End.Controllers
         public async Task<IActionResult> InterfaceCombo()
         {
             List<Combo> combos = new List<Combo>();
-            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Combo");
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Combo/GetAll");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -47,10 +47,23 @@ namespace Front_End.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> DetailCombo(int? id)
+        {
+            Combo combo = new Combo();
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/Combo/GetById/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadAsStringAsync();
+                combo = JsonConvert.DeserializeObject<Combo>(apiResponse);
+            }
+            return View(combo);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> InterfaceFood()
         {
             List<FastFoodItem> fastFoodItems = new List<FastFoodItem>();
-            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food");
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food/GetAll");
 
             if (response.IsSuccessStatusCode)
             {
@@ -58,6 +71,19 @@ namespace Front_End.Controllers
                 fastFoodItems = JsonConvert.DeserializeObject<List<FastFoodItem>>(data);
             }
             return View(fastFoodItems);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DetailFood(int? id)
+        {
+            FastFoodItem fastFoodItem = new FastFoodItem();
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/Food/GetByIdCate/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadAsStringAsync();
+                fastFoodItem = JsonConvert.DeserializeObject<FastFoodItem>(apiResponse);
+            }
+            return View(fastFoodItem);
         }
 
         [HttpGet]
@@ -70,14 +96,14 @@ namespace Front_End.Controllers
                 Foods = new List<FastFoodItem>()
             };
 
-            HttpResponseMessage responseCombos = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Combo");
+            HttpResponseMessage responseCombos = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Combo/GetAll");
             if (responseCombos.IsSuccessStatusCode)
             {
                 string dataCombos = await responseCombos.Content.ReadAsStringAsync();
                 viewModel.Combos = JsonConvert.DeserializeObject<List<Combo>>(dataCombos);
             }
 
-            HttpResponseMessage responseFoods = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food");
+            HttpResponseMessage responseFoods = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food/GetAll");
             if (responseFoods.IsSuccessStatusCode)
             {
                 string dataFoods = await responseFoods.Content.ReadAsStringAsync();
