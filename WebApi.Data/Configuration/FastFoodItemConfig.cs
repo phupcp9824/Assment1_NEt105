@@ -23,7 +23,7 @@ namespace WebApi.Configuration
 
             builder.HasMany(x => x.OrderDetails)
                 .WithOne(x => x.FastFoodItem)
-                .HasForeignKey(x => x.IdFood);
+                .HasForeignKey(x => x.FastFoodItemId);
         }
     }
 }

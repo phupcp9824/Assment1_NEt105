@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
+using WebApi.Models;
+using WebApi.SessionExten;
+using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace Front_End.Controllers
 {
@@ -18,37 +23,43 @@ namespace Front_End.Controllers
         [HttpGet]
         public async Task<IActionResult> AddtoCart()
         {
-            return View();
-        }
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + "/OrderDetail/AddtoCart");
 
-        [HttpPost]
-        public async Task<IActionResult> AddtoCart(int foodId, int amount)
-        {   
-            var requestData = new
-            {
-                FoodId = foodId,
-                Amount = amount
-            }; 
-            // Serialize the data to JSON
-            var jsonContent = JsonSerializer.Serialize(requestData);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            // Send the POST request to the API
-            var response = await _httpClient.PostAsync(_httpClient.BaseAddress + "/OrderDetail/AddToCart", httpContent);
-
-            // Check the response
             if (response.IsSuccessStatusCode)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                ViewBag.Message = responseContent;
+                string data = await response.Content.ReadAsStringAsync();
+                orderDetails = JsonConvert.DeserializeObject<List<OrderDetail>>(data);
+            }
+            return View(orderDetails);
+
+        }
+
+        [HttpPost]  
+        public async Task<IActionResult> AddtoCart(int? foodId = null, int? comboId = null, int amount = 1)
+        {
+            var requestData = new { ComboId = comboId, FoodId = foodId, Amount = amount };
+            var jsonContent = System.Text.Json.JsonSerializer.Serialize(requestData);
+            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(_httpClient.BaseAddress + "/OrderDetail/AddToCart", httpContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                ViewBag.Message = "Item added to cart successfully!";
             }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                ViewBag.Message = errorContent;
+                ViewBag.Message = "Error adding item to cart: " + errorContent;
             }
 
-            return View(); 
+            //// get the food items and combos after adding to cart
+            //var foodItemsResponse = await _httpClient.GetAsync(_httpClient.BaseAddress + "/OrderDetail/AddtoCart");
+            //var foodItemsContent = await foodItemsResponse.Content.ReadAsStringAsync();
+            //var model = System.Text.Json.JsonSerializer.Deserialize<ComboAndFoodViewModel>(foodItemsContent);
+
+            return RedirectToAction("AddtoCart", "OrderDetail");
         }
     }
 }

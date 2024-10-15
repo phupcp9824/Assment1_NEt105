@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NuGet.Protocol.Plugins;
+using System.Security.Claims;
 using System.Text;
 using WebApi.Models;
 
@@ -44,6 +45,7 @@ namespace Front_End.Controllers
             return View(users);
         }
 
+
         [HttpGet]
         public async Task<IActionResult> LoginFirm()
         {
@@ -70,7 +72,9 @@ namespace Front_End.Controllers
 
                     if (loginResponse.Successfull)
                     {
-                        TempData["Success"] = "Login Success";
+                        TempData["UserEmail"] = user.Email;
+
+                        TempData["Success"] = user.UserName + " Login Success";
                         switch (loginResponse.Role)
                         {
                             case "Admin":

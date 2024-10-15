@@ -16,6 +16,12 @@
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success text-center" role="alert">
+            @TempData["Success"]
+        </div>
+    }
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
         <!--begin::Header-->
@@ -40,7 +46,7 @@
                             <li class="user-header text-bg-primary">
                                 <img src="~/Image/Logo.png" class="rounded-circle shadow" alt="User Image">
                                 <p>
-                                    Công Phú - Web Developer
+                                     Công Phú - Web Developer
                                     <small>Member since Nov. 2023</small>
                                 </p>
                             </li> <!--end::User Image--> <!--begin::Menu Body-->

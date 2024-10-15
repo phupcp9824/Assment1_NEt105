@@ -143,9 +143,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> FindByUserRepository(string fullname, string phone, string email)
+        public async Task<IActionResult> FindByUser(string fullname)
         {
-            var find = await _IRepUser.FindByUser(fullname, phone, email);
+            var find = await _IRepUser.FindByUser(fullname);
             return Ok(find);
         }
     }

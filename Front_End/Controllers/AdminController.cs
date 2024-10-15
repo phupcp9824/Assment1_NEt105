@@ -131,11 +131,12 @@ namespace Front_End.Controllers
             }
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> FindByUser(string fullname, string phone, string email)
+        public async Task<IActionResult> FindByUser(string fullname)
         {
             List<User> users = new List<User>();
-            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/User/FindByUserRepository?fullname={fullname}&phone={phone}&email={email}");
+            HttpResponseMessage response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"/User/FindByUser/{fullname}");
 
             if (response.IsSuccessStatusCode)
             {

@@ -26,7 +26,7 @@ namespace WebApi.Configuration
 
             builder.HasMany(x => x.OrderDetails)
                 .WithOne(x => x.Combo)
-                .HasForeignKey(x => x.IdCombo);
+                .HasForeignKey(x => x.ComboId);
 
         }
     }

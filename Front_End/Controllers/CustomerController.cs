@@ -105,7 +105,7 @@ namespace Front_End.Controllers
 
             HttpResponseMessage responseFoods = await _httpClient.GetAsync(_httpClient.BaseAddress + "/Food/GetAll");
             if (responseFoods.IsSuccessStatusCode)
-            {
+            {   
                 string dataFoods = await responseFoods.Content.ReadAsStringAsync();
                 viewModel.Foods = JsonConvert.DeserializeObject<List<FastFoodItem>>(dataFoods);
             }

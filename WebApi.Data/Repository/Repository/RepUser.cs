@@ -92,33 +92,31 @@ namespace Data.Repository.Repository
             }
         }
 
-        public async Task<List<User>> FindByUser(string fullname, string phone, string email)
+        public async Task<List<User>> FindByUser(string fullname)
         {
-            //var FoodByName = await _db.Users.Include(x => x.Role)
-            //                                       .Where(x => x.Fullname.ToLower().Contains(fullname.ToLower())
-            //                                       && x.Phone.ToLower().Contains(phone.ToLower())
-            //                                       && x.Email.ToLower().Contains(email.ToLower()))
-            //                                       .ToListAsync();
-            //return FoodByName;
+            var FoodByName = await _db.Users.Include(x => x.Role)
+                                                   .Where(x => x.Fullname.ToLower().Trim().Contains(fullname.ToLower().Trim()))
+                                                   .ToListAsync();
+            return FoodByName;
             //use AsQueryable để truy vấn linh hoạt no need implement right now, help tối ưu hóa hiệu suất
-           var query = _db.Users.Include(x => x.Role).AsQueryable();
+            //var query = _db.Users.Include(x => x.Role).AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(fullname))
-            {
-                query = query.Where(x => x.Fullname.ToLower().Trim().Contains(fullname.ToLower().Trim()));
-            }
+            //if (!string.IsNullOrWhiteSpace(fullname))
+            //{
+            //    query = query.Where(x => x.Fullname.ToLower().Trim().Contains(fullname.ToLower().Trim()));
+            //}
 
-            if (!string.IsNullOrWhiteSpace(phone))
-            {
-                query = query.Where(x => x.Phone.ToLower().Trim().Contains(phone.ToLower().Trim()));
-            }
+            //if (!string.IsNullOrWhiteSpace(phone))
+            //{
+            //    query = query.Where(x => x.Phone.ToLower().Trim().Contains(phone.ToLower().Trim()));
+            //}
 
-            if (!string.IsNullOrWhiteSpace(email))
-            {
-                query = query.Where(x => x.Email.ToLower().Trim().Contains(email.ToLower().Trim()));
-            }
+            //if (!string.IsNullOrWhiteSpace(email))
+            //{
+            //    query = query.Where(x => x.Email.ToLower().Trim().Contains(email.ToLower().Trim()));
+            //}
 
-            return await query.ToListAsync();
+            //return await query.ToListAsync();
         }
     }
 }

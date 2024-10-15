@@ -29,7 +29,7 @@ namespace WebApi.Configuration
 
             builder.HasMany(x => x.OrderDetails)
                 .WithOne(x => x.Order)
-                .HasForeignKey(x => x.IdOrder);
+                .HasForeignKey(x => x.OrderId);
 
             builder.HasOne(x => x.Invoice)
                .WithOne(x => x.Order)

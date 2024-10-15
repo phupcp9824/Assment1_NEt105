@@ -27,6 +27,8 @@ namespace WebApi.Controllers
             _environment = environment;
         }
 
+       
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginModels Login)
         {
@@ -59,7 +61,8 @@ namespace WebApi.Controllers
             var claims = new[]
             {
                     new Claim(ClaimTypes.Name, Login.UserName),
-                    new Claim(ClaimTypes.Role, role) // Add role claim
+                    new Claim(ClaimTypes.Role, role), // Add role claim
+                      new Claim(ClaimTypes.Email, user.Email)
             };
             // tạo ra bằng những thông tin đã config
             var Token = new JwtSecurityToken(

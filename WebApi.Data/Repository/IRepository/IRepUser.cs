@@ -13,6 +13,6 @@ namespace Data.Repository.IRepository
         Task<Role?> GetRoleById(int id);
         Task<User> Login(LoginModels login);
 
-        Task<List<User>> FindByUser(string Fullname, string phone, string email);
+        Task<List<User>> FindByUser(string Fullname);
     }
 }

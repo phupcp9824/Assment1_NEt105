@@ -1,4 +1,5 @@
-﻿@model List<WebApi.Models.Combo>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<WebApi.Models.Combo>
 
 <main>
     <div class="container-fluid mt-4">
@@ -15,7 +16,7 @@
                                         <h5 class="card-title">@item.Name</h5>
                                         <p class="card-text" style="color:coral">
                                             @item.Price VND
-                                        <a href="/Customer/DetailCombo/@item.Id" class="btn btn-primary float-right">chi tiết
+                                        <a asp-controller="OrderDetail" asp-action="AddtoCart" asp-route-id="@item.Id" class="btn btn-primary float-right">
                                             <i class="bi bi-cart-plus"></i>
                                         </a>
                                         </p>

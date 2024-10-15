@@ -19,17 +19,17 @@ namespace WebApi.Configuration
 
             builder.HasOne(x => x.Combo)
                 .WithMany(x => x.OrderDetails)
-                .HasForeignKey(x => x.IdCombo)
+                .HasForeignKey(x => x.ComboId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.FastFoodItem)
                 .WithMany(x => x.OrderDetails)
-                .HasForeignKey(x => x.IdFood)
+                .HasForeignKey(x => x.FastFoodItemId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.Order)
                 .WithMany(x => x.OrderDetails)
-                .HasForeignKey(x => x.IdOrder)
+                .HasForeignKey(x => x.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

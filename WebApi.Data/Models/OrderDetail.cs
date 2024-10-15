@@ -4,10 +4,11 @@
     {
         // lưu infor detail các món 
         public int Id { get; set; }
-        public int? IdOrder { get; set; }
-        public int? IdFood { get; set; }
-        public int? IdCombo { get; set; }
+        public int? OrderId { get; set; }
+        public int? FastFoodItemId { get; set; }
+        public int? ComboId { get; set; }
         public string? Usename { get; set; }
+        public double Price { get; set; }
         public int Quantity { get; set; }
         public double TotalPrice { get; set; }
         public virtual Order? Order { get; set; }

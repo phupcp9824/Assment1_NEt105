@@ -14,7 +14,7 @@
                                     <h5 class="card-title">@item.Name</h5>
                                     <p class="card-text" style="color:coral">
                                         @item.Price VND
-                                        <a href="/Customer/DetailFood/@item.Id" class="btn btn-primary float-right">
+                                        <a asp-controller="OrderDetail" asp-action="AddtoCart" asp-route-id="@item.Id" class="btn btn-primary float-right">
                                             <i class="bi bi-cart-plus"></i>
                                         </a>
                                     </p>

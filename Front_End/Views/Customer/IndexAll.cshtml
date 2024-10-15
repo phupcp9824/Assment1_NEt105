@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Search Results";
 }
+
 <main>
     <div class="container-fluid mt-4">
 @*         <h2>Search Results for: @(Request.Query["Name"].ToString())</h2> *@
@@ -17,9 +18,9 @@
                                 <h5 class="card-title">@combo.Name</h5>
                                 <p class="card-text" style="color:coral">
                                     @combo.Price VND
-                                    <a href="/Customer/DetailCombo/@combo.Id" class="btn btn-primary float-right">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </a>
+
+                                    <a action="/OrderDetail/AddtoCart/@combo.Id" asp-route-id="@combo.Id" class="btn btn-primary">Add to Cart</a>
+
                                 </p>
                             </div>
                         </div>
@@ -41,9 +42,10 @@
                                 <h5 class="card-title">@food.Name</h5>
                                 <p class="card-text" style="color:coral">
                                     @food.Price VND
-                                    <a href="/Customer/DetailFood/@food.Id" class="btn btn-primary float-right">
+                                    <a action="/OrderDetail/AddtoCart/@food.Id"  class="btn btn-primary float-right">
                                         <i class="bi bi-cart-plus"></i>
-                                    </a>
+                                    </a> 
+                           
                                 </p>
                             </div>
                         </div>
